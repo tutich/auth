@@ -1,9 +1,21 @@
 import React, { useState } from "react";
+import {useNavigate} from 'react-router-dom';
+import axios from 'axios';
 
 function Registration () {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const navigate = useNavigate()
+
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        axios.post('http://localhost:3001/register', {name, email, password})
+        .then(result => {console.log(result)
+            navigate('/login')
+        }).catch(err => console.log(err))
+    }
 
 
 
@@ -26,7 +38,7 @@ function Registration () {
                     <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)}/>
                 </div>
             </form>
-            <button type="submit">Sign up</button>
+            <button type="submit" onSubmit={handleSubmit}>Sign up</button>
 
             <p>Already have an account?</p>
             
